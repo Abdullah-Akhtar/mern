@@ -1,13 +1,13 @@
-const express = require('express')
+const express = require("express");
 
-const MovieCtrl = require('../controllers/movie-ctrl')
+const UserCtrl = require("../controllers/curd-ctrl");
 
-const router = express.Router()
+const router = express.Router();
 
-router.post('/movie', MovieCtrl.createMovie)
-router.put('/movie/:id', MovieCtrl.updateMovie)
-router.delete('/movie/:id', MovieCtrl.deleteMovie)
-router.get('/movie/:id', MovieCtrl.getMovieById)
-router.get('/movies', MovieCtrl.getMovies)
+router.post("/user", UserCtrl.createUser);
+router.put("/user/:id", UserCtrl.updateUser);
+router.delete("/user/:id", UserCtrl.deleteUser);
+router.get("/user/:id", UserCtrl.getUserById);
+router.get("/users", UserCtrl.getUser);
 
-module.exports = router
+module.exports = router;
