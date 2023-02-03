@@ -109,8 +109,7 @@ getUser = async (req, res) => {
 };
 
 userSignIn = async (req, res) => {
-  // res.send(req.token);
-  res.send("working");
+  res.send(req.token);
 };
 
 module.exports = {
