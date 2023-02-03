@@ -12,8 +12,6 @@ function App() {
     <>
       <UserCreated />
       <FindUser />
-      <DeleteUser />
-      <GetAllUser />
     </>
   );
 }

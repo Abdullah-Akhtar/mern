@@ -36,19 +36,3 @@
     transform: rotate(360deg);
   }
 }
-.main-div{
-  margin-top: 50px;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  align-content: center ;
-}
-
-input{
-  margin-top: 5px;
-  padding: 7px;
-}
-button{
-  margin-top: 10px !important;
-  padding: 10px !important;
-}

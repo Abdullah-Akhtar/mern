@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import api from "../api";
-import '../App.css';
+import "../App.css";
 
 function UserCreated() {
   const [temp, setTemp] = useState({});
@@ -19,7 +19,9 @@ function UserCreated() {
       [evt.target.name]: value,
     });
     await api.insertUser(temp).then((res) => {
-      window.alert(`User inserted successfully`);
+      window.alert(
+        `User inserted successfullconst { movies, isLoading } = this.statey`
+      );
       setTemp({
         name: "",
         email: "",
@@ -29,40 +31,71 @@ function UserCreated() {
   }
 
   return (
-    <div className="main-div">
-      <div>
-        <h1>Create User</h1>
-        <input
-          id="name"
-          className="form-field"
-          type="text"
-          placeholder="Full Name"
-          name="name"
-          value={temp.name}
-          onChange={handleChange}
-        />
-        <br></br>
-        <input
-          id="email"
-          className="form-field"
-          type="text"
-          placeholder="Email"
-          name="email"
-          value={temp.email}
-          onChange={handleChange}
-        />
-        <br></br>
-        <input
-          id="password"
-          className="form-field"
-          type="password"
-          placeholder="Password"
-          name="password"
-          value={temp.password}
-          onChange={handleChange}
-        />
-        <br></br>
-        <button onClick={(e) => handleIncludeUser(e)}>Add User</button>
+    <div className="container mt-5">
+      <div className="row">
+        <div className="col-6">
+          <h1 className="form-label">Create User</h1>
+          <input
+            className="form-control mt-2"
+            id="name"
+            type="text"
+            placeholder="Full Name"
+            name="name"
+            value={temp.name}
+            onChange={handleChange}
+          />
+          <input
+            id="email"
+            className="form-control mt-2"
+            type="text"
+            placeholder="Email"
+            name="email"
+            value={temp.email}
+            onChange={handleChange}
+          />
+          <input
+            id="password"
+            className="form-control mt-2"
+            type="password"
+            placeholder="Password"
+            name="password"
+            value={temp.password}
+            onChange={handleChange}
+          />
+          <button
+            className="btn btn-primary mt-3"
+            onClick={(e) => handleIncludeUser(e)}
+          >
+            Sign Up
+          </button>
+        </div>
+        <div className="col-6">
+          <h1 className="form-label">Sign IN</h1>
+          <input
+            className="form-control mt-2"
+            id="name"
+            type="text"
+            placeholder="Full Name"
+            name="name"
+            value={temp.name}
+            onChange={handleChange}
+          />
+          <input
+            id="email"
+            className="form-control mt-2"
+            type="text"
+            placeholder="Email"
+            name="email"
+            value={temp.email}
+            onChange={handleChange}
+          />
+          <button
+            className="btn btn-primary mt-3"
+            onClick={(e) => handleIncludeUser(e)}
+          >
+            Sign In
+          </button>
+        </div>
       </div>
     </div>
   );
