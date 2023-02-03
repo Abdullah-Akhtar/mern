@@ -11,7 +11,7 @@ createUser = (req, res) => {
   }
 
   const user = new User(body);
-
+  user.setPassword(body.password);
   if (!user) {
     return res.status(400).json({ success: false, error: err });
   }
@@ -97,7 +97,6 @@ getUserById = async (req, res) => {
 };
 
 getUser = async (req, res) => {
-
   await User.find({}, (err, users) => {
     if (err) {
       return res.status(400).json({ success: false, error: err });
@@ -109,10 +108,16 @@ getUser = async (req, res) => {
   }).catch((err) => console.log(err));
 };
 
+userSignIn = async (req, res) => {
+  // res.send(req.token);
+  res.send("working");
+};
+
 module.exports = {
   createUser,
   updateUser,
   deleteUser,
   getUser,
   getUserById,
+  userSignIn,
 };
