@@ -5,9 +5,13 @@ import "../App.css";
 function FindUser() {
   const [temp, setTemp] = useState([]);
   async function findUsers(evt) {
-    await api.getAllUser().then((users) => {
+    
+    const id = localStorage.getItem('my-key');
+    await api.getAllUser(id).then((users) => {
       console.log(users.data.data);
       setTemp(users.data.data);
+    }).catch((err)=>{
+      console.log(err)
     });
   }
   // }findUsers();
@@ -16,9 +20,14 @@ function FindUser() {
     await api.deleteUserById(evt);
     window.location.reload();
   }
-
+  async function logOut(){
+    localStorage.removeItem('my-key');
+    window.location.reload();
+  }
   useEffect(() => {
-    findUsers();
+    if(localStorage.getItem('my-key')){
+      findUsers();
+    }
   }, []);
   return (
     <>
@@ -51,6 +60,7 @@ function FindUser() {
                 ))}
               </tbody>
             </table>
+            <button className="btn btn-danger" style={{visibility :"hidden"}} onClick={(e)=>{logOut()}}>Log Out</button>
           </div>
         </div>
       </div>

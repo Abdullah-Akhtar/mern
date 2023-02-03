@@ -4,7 +4,6 @@ var jwt = require("jsonwebtoken");
 
 // async function isEmail(req, res, next) {
 const isEmail = (req, res, next) => {
-    console.log("working")
   Users.findOne({ email: req.body.email }, (err, data) => {
     if (err) {
       return res.status(400).send(err);
