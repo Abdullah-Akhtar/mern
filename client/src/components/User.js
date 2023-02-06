@@ -4,8 +4,9 @@ import "../App.css";
 
 function FindUser() {
   const [temp, setTemp] = useState([]);
+  const [btnShow, setBtnShow] = useState(false)
   async function findUsers(evt) {
-    
+    setBtnShow(true)
     const id = localStorage.getItem('my-key');
     await api.getAllUser(id).then((users) => {
       console.log(users.data.data);
@@ -60,7 +61,7 @@ function FindUser() {
                 ))}
               </tbody>
             </table>
-            <button className="btn btn-danger" style={{visibility :"hidden"}} onClick={(e)=>{logOut()}}>Log Out</button>
+           {btnShow && <button className="btn btn-danger"  onClick={(e)=>{logOut()}}>Log Out</button>}
           </div>
         </div>
       </div>
