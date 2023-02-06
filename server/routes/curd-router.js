@@ -1,6 +1,6 @@
 const express = require("express");
 
-const UserCtrl = require("../controllers/curd-ctrl");
+const UserCtrl = require("../controllers/user-curd-ctrl");
 
 const router = express.Router();
 

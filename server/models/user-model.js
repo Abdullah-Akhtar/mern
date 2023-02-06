@@ -4,7 +4,13 @@ const bcrypt = require("bcrypt");
 
 const User = new Schema(
   {
-    name: { type: String, required: true },
+    name: {
+      type: String,
+      required: true,
+      minLength: 3,
+      default: null,
+      trim: true,
+    },
     email: {
       type: String,
       lowercase: true,
@@ -12,6 +18,14 @@ const User = new Schema(
       required: [true, "can't be blank"],
       match: [/\S+@\S+\.\S+/, "is invalid"],
       index: true,
+    },
+    role: {
+      type: Number,
+      default: 2, //  2- User
+      enum: [
+        1, // 1: Admin
+        2, // 2: User
+      ],
     },
     password: { type: String, required: true },
   },

@@ -97,17 +97,6 @@ getUserById = async (req, res) => {
     return res.status(200).json({ success: true, data: user });
   }).catch((err) => console.log(err));
 };
-// const gettoken = (id) => {
-//   console.log(id)
-//   if (
-//     (id && id.split(" ")[0] === "Token") ||
-//     (id && id.split(" ")[0] === "Bearer")
-//   ) {
-//     return id.split(" ")[1];
-//   }
-
-//   return 'FazySting';
-// };
 getUser = async (req, res) => {
   console.log(req.params.id)
   // let token =  gettoken(req.params.id);

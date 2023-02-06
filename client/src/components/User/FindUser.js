@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from "react";
-import api from "../api";
-import "../App.css";
+import api from "../../api";
+import "../../App.css";
+import { useNavigate } from "react-router-dom";
+
 
 function FindUser() {
   const [temp, setTemp] = useState([]);
-  const [btnShow, setBtnShow] = useState(false)
+  const [btnShow, setBtnShow] = useState(false);
+  const navigate = useNavigate();
+
+  const [authenticated, setauthenticated] = useState();
   async function findUsers(evt) {
-    setBtnShow(true)
-    const id = localStorage.getItem('my-key');
-    await api.getAllUser(id).then((users) => {
-      console.log(users.data.data);
-      setTemp(users.data.data);
-    }).catch((err)=>{
-      console.log(err)
-    });
+    setBtnShow(true);
+    const id = localStorage.getItem("my-key");
+    await api
+      .getAllUser(id)
+      .then((users) => {
+        console.log(users.data.data);
+        setauthenticated(true);
+        setTemp(users.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   // }findUsers();
   async function removeUser(evt) {
@@ -21,13 +30,15 @@ function FindUser() {
     await api.deleteUserById(evt);
     window.location.reload();
   }
-  async function logOut(){
-    localStorage.removeItem('my-key');
+  async function logOut() {
+    localStorage.removeItem("my-key");
     window.location.reload();
   }
   useEffect(() => {
-    if(localStorage.getItem('my-key')){
+    if (localStorage.getItem("my-key")) {
       findUsers();
+    }else{
+      navigate("/SignIn");
     }
   }, []);
   return (
@@ -61,7 +72,16 @@ function FindUser() {
                 ))}
               </tbody>
             </table>
-           {btnShow && <button className="btn btn-danger"  onClick={(e)=>{logOut()}}>Log Out</button>}
+            {btnShow && (
+              <button
+                className="btn btn-danger"
+                onClick={(e) => {
+                  logOut();
+                }}
+              >
+                Log Out
+              </button>
+            )}
           </div>
         </div>
       </div>
