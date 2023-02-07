@@ -4,7 +4,7 @@ import "../../App.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-function SignUp() {
+function SignIn() {
   const [tempSign, setTempSign] = useState({});
   const navigate = useNavigate();
   function SignInHandleChange(evt) {
@@ -70,4 +70,4 @@ function SignUp() {
     </div>
   );
 }
-export default SignUp;
+export default SignIn;

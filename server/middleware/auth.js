@@ -38,8 +38,12 @@ const token = (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
-  let token = gettoken(req);
+  // console.log(req)
+  var jwt = require("jsonwebtoken");
+  // let token = gettoken(req);
+  let token = req.body. id;
   var decoded = jwt.verify(token, "abcdf");
+  // console.log(decoded)
   Users.findOne({ email: decoded.foo }, (err, data) => {
     if (err) return res.status(302).send(err);
     if (data.role !== 1) return res.status(444).send("You are not an Admin");

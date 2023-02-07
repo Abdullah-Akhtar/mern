@@ -10,6 +10,9 @@ export const updateUserById = (id, payload) => api.put(`/user/${id}`, payload);
 export const deleteUserById = (id) => api.delete(`/user/${id}`);
 export const getUserById = (id) => api.get(`/user/${id}`);
 export const userSignIn = (payload) => api.post(`/userSignIn`, payload);
+export const search = (payload) => api.get(`/book`, payload);
+export const addBook = (payload) => api.post(`/book`, payload);
+
 
 const apis = {
   insertUser,
@@ -17,6 +20,8 @@ const apis = {
   updateUserById,
   deleteUserById,
   userSignIn,
+  search,
+  addBook
 };
 
 export default apis;
