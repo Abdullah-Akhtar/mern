@@ -135,7 +135,6 @@ userSignIn = async (req, res) => {
   return res.status(200).json({ success: true, data: req.token });
 };
 userToken = async (req, res) => {
-  console.log(req.user);
   if (req.user.email === "admin@gmail.com")
     return res.status(200).json({ success: true, data: "admin" });
   else return res.status(200).json({ success: true, data: true });

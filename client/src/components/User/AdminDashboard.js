@@ -6,9 +6,10 @@ import { useNavigate } from "react-router-dom";
 function BooksManagement() {
   const [temp, setTemp] = useState([]);
   const [isAdmin, setisAdmin] = useState(false);
+  const [token, setToken] = useState();
   const [BookList, setBookList] = useState([]);
   const [btnShow, setBtnShow] = useState(false);
-  const [authenticated, setauthenticated] = useState();
+  const [user, setUser] = useState();
 
   const navigate = useNavigate();
 
@@ -20,11 +21,11 @@ function BooksManagement() {
         .then((result) => {
           if (result.data.data === "admin") {
             setisAdmin(true);
-            setauthenticated(true);
             setBtnShow(true);
+            setToken(id);
             findBook();
           } else if (result.data.data === true) {
-            setauthenticated(true);
+            setUser(true);
             setBtnShow(true);
             findBook();
           } else {
@@ -49,28 +50,21 @@ function BooksManagement() {
 
   async function SignInHandleIncludeUser(evt) {
     const value = evt.target.value;
-    setTemp({
-      ...temp,
-      [evt.target.name]: value,
-      id: localStorage.getItem("my-key"),
-    });
-    await api.addBook(temp).then((res) => {
-      window.alert(res.message);
-      setTemp({
-        title: "",
-        auther: "",
-        price: "",
-        quantity: "",
+    await api
+      .addBook({
+        ...temp,
+        [evt.target.name]: value,
+        id: token,
+      })
+      .then((res) => {
+        window.location.reload();
       });
-      window.location.reload();
-    });
   }
 
   async function findBook(evt) {
     await api
       .searchAll()
       .then((name) => {
-        setauthenticated(true);
         setBookList(name.data);
       })
       .catch((err) => {
@@ -93,6 +87,7 @@ function BooksManagement() {
     <>
       <div className="container mt-5">
         <div>
+          {token && <h1>${token}</h1>}
           {btnShow && (
             <button
               className="btn btn-danger"
@@ -144,12 +139,14 @@ function BooksManagement() {
                 value={temp.number}
                 onChange={SignInHandleChange}
               />
-              <button
-                className="btn btn-primary mt-3"
-                onClick={(e) => SignInHandleIncludeUser(e)}
-              >
-                Add Book
-              </button>
+              {token && (
+                <button
+                  className="btn btn-primary mt-3"
+                  onClick={(e) => SignInHandleIncludeUser(e)}
+                >
+                  Add Book
+                </button>
+              )}
             </div>
           )}
           <div className="col-12">
@@ -160,6 +157,7 @@ function BooksManagement() {
                   <th className="col">Aurther</th>
                   <th className="col">Price</th>
                   <th className="col">Quantity</th>
+                  {user && <th className="col">Add to Cart</th>}
                   {isAdmin && <th className="col">Edit</th>}
                   {isAdmin && <th className="col">Delete</th>}
                 </tr>
@@ -184,6 +182,11 @@ function BooksManagement() {
                         >
                           X
                         </button>
+                      </td>
+                    )}
+                    {user && (
+                      <td className="col">
+                        <button className="btn btn-primary">+</button>
                       </td>
                     )}
                   </tr>

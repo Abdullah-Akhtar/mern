@@ -58,6 +58,7 @@ const token = (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
+  console.log(req.body)
   var jwt = require("jsonwebtoken");
   let token = req.body.id;
   var decoded = jwt.verify(token, "abcdf");
