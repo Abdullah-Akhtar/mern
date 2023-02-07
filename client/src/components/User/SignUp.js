@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 function SignUp() {
   const [temp, setTemp] = useState({});
 
+  ////////////////////////////////////////
+  ////////////Setting State//////////////
+  //////////////////////////////////////
   function handleChange(evt) {
     const value = evt.target.value;
     setTemp({
@@ -13,6 +16,10 @@ function SignUp() {
       [evt.target.name]: value,
     });
   }
+
+  ////////////////////////////////////////
+  ////////////Sign Up api////////////////
+  //////////////////////////////////////
   async function handleIncludeUser(evt) {
     const value = evt.target.value;
     setTemp({
@@ -21,14 +28,13 @@ function SignUp() {
     });
     await api.insertUser(temp).then((res) => {
       window.alert("User inserted successful");
-      setTemp({
-        name: "",
-        email: "",
-        password: "",
-      });
       window.location.reload();
     });
   }
+
+  ////////////////////////////////////////
+  //////////Main Function////////////////
+  //////////////////////////////////////  
   return (
     <div className="container mt-5">
       <div className="row">

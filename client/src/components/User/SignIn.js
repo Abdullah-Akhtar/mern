@@ -7,6 +7,10 @@ import { useNavigate } from "react-router-dom";
 function SignIn() {
   const [tempSign, setTempSign] = useState({});
   const navigate = useNavigate();
+
+  ////////////////////////////////////////
+  ////////////Sign In State//////////////
+  //////////////////////////////////////
   function SignInHandleChange(evt) {
     const value = evt.target.value;
     setTempSign({
@@ -14,6 +18,10 @@ function SignIn() {
       [evt.target.name]: value,
     });
   }
+
+  ////////////////////////////////////////
+  /////////Sign In Api sending///////////
+  //////////////////////////////////////
   async function SignInHandleIncludeUser(evt) {
     const value = evt.target.value;
     setTempSign({
@@ -32,9 +40,16 @@ function SignIn() {
       navigate("/admin");
     });
   }
+
+  ////////////////////////////////////////
+  ////////////Main Fucntion//////////////
+  //////////////////////////////////////
   return (
     <div className="container mt-5">
       <div className="row">
+        {/* ////////////////////////////////////////
+        ////////////Sign In////////////////////////
+        ///////////////////////////./////////// */}
         <div className="col-6">
           <h1 className="form-label">Sign IN</h1>
           <input

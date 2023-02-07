@@ -114,22 +114,23 @@ function BooksManagement() {
   ///////////////////////////////////////////
   return (
     <>
-    {/* Main Div */}
+      {/* Main Div */}
       <div className="container mt-5">
-        {/* Logout Button */}
-        <div>
-          {btnShow && (
-            <button
-              className="btn btn-danger"
-              onClick={(e) => {
-                logOut();
-              }}
-            >
-              Log Out
-            </button>
-          )}
-        </div>
         <div className="row">
+          {/* Logout Button */}
+          <div className="col-12">
+            {btnShow && (
+              <button
+                className="btn btn-danger"
+                onClick={(e) => {
+                  logOut();
+                }}
+              >
+                Log Out
+              </button>
+            )}
+          </div>
+          {/* Add New Book Form */}
           {isAdmin && (
             <div className="col-6">
               <h1 className="form-label">Add New Book</h1>
@@ -179,6 +180,8 @@ function BooksManagement() {
               )}
             </div>
           )}
+
+          {/* Display All books in Table */}
           <div className="col-12">
             <table className="table">
               <thead>
