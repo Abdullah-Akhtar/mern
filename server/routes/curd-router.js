@@ -17,5 +17,6 @@ router.post("/book", auth.isAdmin, BookCtrl.addBook);
 router.post("/book/:search", auth.isAdmin, BookCtrl.updatebook);
 router.delete("/book", auth.isAdmin, BookCtrl.remBook);
 router.get("/book", BookCtrl.search);
+router.get("/bookSearch", BookCtrl.searchAll);
 
 module.exports = router;

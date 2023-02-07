@@ -6,20 +6,33 @@ const Books = require("../models/book-model");
 ////////////Adding new books////////////
 ////////////////////////////////////////
 addBook = (req, res) => {
-  // console.log("working")
-  const newbook = new Books({
-    title: req.body.title,
-    auther: req.body.auther,
-    price: req.body.price,
-    quantity: req.body.quantity,
-  });
-  console.log(newbook)
-  // newbook
-  //   .save()
-  //   .then((result) =>
-  //     res.status(201).send({ msg: `Book added successfully ${newbook}` })
-  //   )
-  //   .catch((err) => res.status(403).send({ msg: "Something went wrong" }));
+  const body = req.body;
+
+  if (!body) {
+    return res.status(400).json({
+      success: false,
+      error: "You must provide a Book",
+    });
+  }
+
+  const newbook = new Books(body);
+  if (!newbook) {
+    return res.status(400).json({ success: false, error: err });
+  }
+  newbook
+    .save()
+    .then(() => {
+      return res.status(201).json({
+        success: true,
+        message: "Book Added Successfully",
+      });
+    })
+    .catch((error) => {
+      return res.status(400).json({
+        error,
+        message: "Book not Added!",
+      });
+    });
 };
 ////////////////////////////////////////
 ////////////updating books//////////////
@@ -44,7 +57,7 @@ updatebook = (req, res) => {
           .catch((err) =>
             res.status(403).send({ msg: "Something went wrong" })
           );
-      }else if(err || !names ){
+      } else if (err || !names) {
         res.send("Nothing found");
       }
     }
@@ -68,7 +81,7 @@ remBook = (req, res) => {
 ////////////////////////////////////////
 ////////////Searching books////////////
 ////////////////////////////////////////
-search =  (req, res) => {
+search = (req, res) => {
   Books.find(
     {
       $or: [
@@ -85,9 +98,23 @@ search =  (req, res) => {
   );
 };
 
+////////////////////////////////////////
+////////////Get All books////////////
+////////////////////////////////////////
+searchAll = (req, res) => {
+  console.log("working")
+  Books.find({}, function (err, names) {
+    if (err || !names.length) {
+      return res.status(400).send("Nothing Found.");
+    }
+    return res.send(names);
+  });
+};
+
 module.exports = {
-    addBook,
-    updatebook,
-    remBook,
-    search
-}
+  addBook,
+  updatebook,
+  remBook,
+  search,
+  searchAll,
+};
