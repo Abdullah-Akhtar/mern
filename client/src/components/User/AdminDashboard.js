@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 function BooksManagement() {
   const [temp, setTemp] = useState([]);
+  const [isAdmin, setisAdmin] = useState(false);
   const [BookList, setBookList] = useState([]);
   const [btnShow, setBtnShow] = useState(false);
   const [authenticated, setauthenticated] = useState();
@@ -17,7 +18,12 @@ function BooksManagement() {
       await api
         .userToken(id)
         .then((result) => {
-          if (result.data.data === true) {
+          if (result.data.data === "admin") {
+            setisAdmin(true);
+            setauthenticated(true);
+            setBtnShow(true);
+            findBook();
+          } else if (result.data.data === true) {
             setauthenticated(true);
             setBtnShow(true);
             findBook();
@@ -99,51 +105,53 @@ function BooksManagement() {
           )}
         </div>
         <div className="row">
-          <div className="col-6">
-            <h1 className="form-label">Add New Book</h1>
-            <input
-              className="form-control mt-2"
-              id="title"
-              type="text"
-              placeholder="Title"
-              name="title"
-              value={temp.title}
-              onChange={SignInHandleChange}
-            />
-            <input
-              id="auther"
-              className="form-control mt-2"
-              type="text"
-              placeholder="Auther"
-              name="auther"
-              value={temp.auther}
-              onChange={SignInHandleChange}
-            />
-            <input
-              id="price"
-              className="form-control mt-2"
-              type="text"
-              placeholder="Price"
-              name="price"
-              value={temp.price}
-              onChange={SignInHandleChange}
-            />
-            <input
-              id="quantity"
-              className="form-control mt-2"
-              type="number"
-              placeholder="Quantity"
-              name="quantity"
-              value={temp.number}
-              onChange={SignInHandleChange}
-            />
-            <button
-              className="btn btn-primary mt-3"
-              onClick={(e) => SignInHandleIncludeUser(e)}
-            >
-              Add Book
-            </button>
-          </div>
+          {isAdmin && (
+            <div className="col-6">
+              <h1 className="form-label">Add New Book</h1>
+              <input
+                className="form-control mt-2"
+                id="title"
+                type="text"
+                placeholder="Title"
+                name="title"
+                value={temp.title}
+                onChange={SignInHandleChange}
+              />
+              <input
+                id="auther"
+                className="form-control mt-2"
+                type="text"
+                placeholder="Auther"
+                name="auther"
+                value={temp.auther}
+                onChange={SignInHandleChange}
+              />
+              <input
+                id="price"
+                className="form-control mt-2"
+                type="text"
+                placeholder="Price"
+                name="price"
+                value={temp.price}
+                onChange={SignInHandleChange}
+              />
+              <input
+                id="quantity"
+                className="form-control mt-2"
+                type="number"
+                placeholder="Quantity"
+                name="quantity"
+                value={temp.number}
+                onChange={SignInHandleChange}
+              />
+              <button
+                className="btn btn-primary mt-3"
+                onClick={(e) => SignInHandleIncludeUser(e)}
+              >
+                Add Book
+              </button>
+            </div>
+          )}
           <div className="col-12">
             <table className="table">
               <thead>
@@ -152,8 +160,8 @@ function BooksManagement() {
                   <th className="col">Aurther</th>
                   <th className="col">Price</th>
                   <th className="col">Quantity</th>
-                  <th className="col">Edit</th>
-                  <th className="col">Delete</th>
+                  {isAdmin && <th className="col">Edit</th>}
+                  {isAdmin && <th className="col">Delete</th>}
                 </tr>
               </thead>
               <tbody>
@@ -163,18 +171,21 @@ function BooksManagement() {
                     <td className="col">{books.auther}</td>
                     <td className="col">{books.price}</td>
                     <td className="col">{books.quantity}</td>
-                    <td className="col">
-                      <button className="btn btn-primary">+</button>
-                    </td>
-                    <td className="col">
-                      <button
-                        className="btn btn-danger"
-                        onClick={(e) => removeUser(books._id)}
-                      >
-                        X
-                      </button>
-                    </td>
-                    <td />
+                    {isAdmin && (
+                      <td className="col">
+                        <button className="btn btn-primary">+</button>
+                      </td>
+                    )}
+                    {isAdmin && (
+                      <td className="col">
+                        <button
+                          className="btn btn-danger"
+                          onClick={(e) => removeUser(books._id)}
+                        >
+                          X
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>
