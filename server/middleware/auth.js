@@ -12,8 +12,7 @@ const isEmail = (req, res, next) => {
     }
     if (bcrypt.compareSync(req.body.password, data.password) === false) {
       return res.status(444).send("Password Does not Match");
-    }
-    next();
+    } else next();
   });
 };
 
@@ -58,7 +57,22 @@ const token = (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
-  console.log(req.body)
+  console.log(req.body);
+  var jwt = require("jsonwebtoken");
+  let token = req.body.id;
+  var decoded = jwt.verify(token, "abcdf");
+  Users.findOne({ email: decoded.foo }, (err, data) => {
+    if (err) return res.status(302).send(err);
+    if (data.role !== 1) return res.status(444).send("You are not an Admin");
+    next();
+  });
+};
+
+//Checking admin for removing book
+const isAdminRe = (req, res, next) => {
+  console.log(req.body);
+  console.log("Token" + req.body.token);
+  console.log("evt" + req.body.evt);
   var jwt = require("jsonwebtoken");
   let token = req.body.id;
   var decoded = jwt.verify(token, "abcdf");
@@ -80,4 +94,4 @@ const isLogin = (req, res, next) => {
   });
 };
 
-module.exports = { isEmail, isToken, token, isAdmin, isLogin };
+module.exports = { isEmail, isToken, token, isAdminRe, isAdmin, isLogin };

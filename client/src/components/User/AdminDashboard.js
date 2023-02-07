@@ -13,6 +13,9 @@ function BooksManagement() {
 
   const navigate = useNavigate();
 
+  /////////////////////////////////////////////
+  ///////Checking if User Login or Not////////
+  ///////////////////////////////////////////
   async function isUser() {
     if (localStorage.getItem("my-key")) {
       const id = localStorage.getItem("my-key");
@@ -40,6 +43,10 @@ function BooksManagement() {
       navigate("/SignIn");
     }
   }
+
+  /////////////////////////////////////////////
+  /////////State Setup////////////////////////
+  ///////////////////////////////////////////
   function SignInHandleChange(evt) {
     const value = evt.target.value;
     setTemp({
@@ -48,6 +55,9 @@ function BooksManagement() {
     });
   }
 
+  /////////////////////////////////////////////
+  /////////Add new Book////////////////////////
+  ///////////////////////////////////////////
   async function SignInHandleIncludeUser(evt) {
     const value = evt.target.value;
     await api
@@ -61,6 +71,9 @@ function BooksManagement() {
       });
   }
 
+  /////////////////////////////////////////////
+  /////////Get All Books//////////////////////
+  ///////////////////////////////////////////
   async function findBook(evt) {
     await api
       .searchAll()
@@ -71,23 +84,40 @@ function BooksManagement() {
         console.log(err);
       });
   }
+
+  /////////////////////////////////////////////
+  /////////Remove one Book////////////////////
+  ///////////////////////////////////////////
   async function removeUser(evt) {
     console.log(evt);
-    await api.remBook(evt);
+    await api.remBook();
     window.location.reload();
   }
+
+  /////////////////////////////////////////////
+  /////////Logout User////////////////////////
+  ///////////////////////////////////////////
   async function logOut() {
     localStorage.removeItem("my-key");
     window.location.reload();
   }
+
+  /////////////////////////////////////////////
+  /////////Startup Function///////////////////
+  ///////////////////////////////////////////
   useEffect(() => {
     isUser();
   }, []);
+
+  /////////////////////////////////////////////
+  /////////Main Function Start////////////////
+  ///////////////////////////////////////////
   return (
     <>
+    {/* Main Div */}
       <div className="container mt-5">
+        {/* Logout Button */}
         <div>
-          {token && <h1>${token}</h1>}
           {btnShow && (
             <button
               className="btn btn-danger"

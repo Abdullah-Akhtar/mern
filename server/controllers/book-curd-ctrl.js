@@ -44,11 +44,9 @@ updatebook = (req, res) => {
     },
     (err, names) => {
       if (!err && names) {
-        console.log(names);
         names.title = req.body.title ? req.body.title : names.title;
         names.auther = req.body.auther ? req.body.auther : names.auther;
         names.price = req.body.price ? req.body.price : names.price;
-        console.log(names);
         names
           .save()
           .then((result) =>
@@ -68,7 +66,8 @@ updatebook = (req, res) => {
 ////////////Delete book////////////
 ////////////////////////////////////////
 remBook = (req, res) => {
-  console.log(req)
+  console.log("Token" + token)
+  console.log("evt" + evt)
   // Books.deleteOne({ title: req.body.title }, (err, data) => {
   //   if (!err && data) {
   //     res.send("Book Deleted Successfully");
@@ -103,7 +102,6 @@ search = (req, res) => {
 ////////////Get All books////////////
 ////////////////////////////////////////
 searchAll = (req, res) => {
-  // console.log("working")
   Books.find({}, function (err, names) {
     if (err || !names.length) {
       return res.status(400).send("Nothing Found.");

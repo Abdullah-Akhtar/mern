@@ -20,7 +20,6 @@ function SignIn() {
       ...tempSign,
       [evt.target.name]: value,
     });
-    console.log(tempSign);
     await api.userSignIn(tempSign).then((res) => {
       window.alert(res.data.data);
       const textForStorage = res.data.data;
