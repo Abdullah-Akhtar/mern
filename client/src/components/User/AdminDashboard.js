@@ -11,6 +11,12 @@ function BooksManagement() {
 
   const navigate = useNavigate();
 
+  async function isUser(){
+    const id = localStorage.getItem("my-key");
+    console.log(id)
+    await api.userToken(id).then().catch()
+
+  }
   function SignInHandleChange(evt) {
     const value = evt.target.value;
     setTemp({
@@ -51,7 +57,7 @@ function BooksManagement() {
   }
   async function removeUser(evt) {
     console.log(evt);
-    await api.deleteUserById(evt);
+    await api.remBook(evt);
     window.location.reload();
   }
   async function logOut() {
@@ -70,6 +76,7 @@ function BooksManagement() {
   return (
     <>
       <div className="container mt-5">
+        <button className="btn" onClick={isUser}>temp</button>
         <div>
           {btnShow && (
             <button

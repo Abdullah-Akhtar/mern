@@ -8,6 +8,7 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 
 router.post("/user", UserCtrl.createUser);
+router.post("/userToken/:id", auth.token,UserCtrl.userToken);
 router.put("/user/:id", UserCtrl.updateUser);
 router.delete("/user/:id", UserCtrl.deleteUser);
 router.get("/user/:id", UserCtrl.getUserById);

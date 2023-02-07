@@ -68,14 +68,15 @@ updatebook = (req, res) => {
 ////////////Delete book////////////
 ////////////////////////////////////////
 remBook = (req, res) => {
-  Books.deleteOne({ title: req.body.title }, (err, data) => {
-    if (!err && data) {
-      res.send("Book Deleted Successfully");
-    }
-    if (!data) {
-      res.send("Title not found");
-    }
-  });
+  console.log(req)
+  // Books.deleteOne({ title: req.body.title }, (err, data) => {
+  //   if (!err && data) {
+  //     res.send("Book Deleted Successfully");
+  //   }
+  //   if (!data) {
+  //     res.send("Title not found");
+  //   }
+  // });
 };
 
 ////////////////////////////////////////
@@ -102,7 +103,7 @@ search = (req, res) => {
 ////////////Get All books////////////
 ////////////////////////////////////////
 searchAll = (req, res) => {
-  console.log("working")
+  // console.log("working")
   Books.find({}, function (err, names) {
     if (err || !names.length) {
       return res.status(400).send("Nothing Found.");

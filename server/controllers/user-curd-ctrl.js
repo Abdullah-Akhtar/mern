@@ -4,7 +4,7 @@ var jwt = require("jsonwebtoken");
 
 createUser = (req, res) => {
   const body = req.body;
-  console.log("working")
+  console.log("working");
   if (!body) {
     return res.status(400).json({
       success: false,
@@ -98,16 +98,16 @@ getUserById = async (req, res) => {
   }).catch((err) => console.log(err));
 };
 getUser = async (req, res) => {
-  console.log(req.params.id)
+  console.log(req.params.id);
   // let token =  gettoken(req.params.id);
-  let token =  req.params.id;
+  let token = req.params.id;
   if (!token) res.send("Please Sign In");
   var decoded = jwt.verify(token, "abcdf");
   User.findOne({ email: decoded.foo }, async (err, data) => {
     if (err) return res.status(302).send(err);
     if (!data) return res.status(444).send("You are not Valid User");
     req.user = data;
-    console.log(req.user)
+    console.log(req.user);
     await User.find({}, (err, users) => {
       if (err) {
         return res.status(400).json({ success: false, error: err });
@@ -134,7 +134,9 @@ getUser = async (req, res) => {
 userSignIn = async (req, res) => {
   return res.status(200).json({ success: true, data: req.token });
 };
+userToken = async (req, res) => {
 
+}
 module.exports = {
   createUser,
   updateUser,
@@ -142,4 +144,5 @@ module.exports = {
   getUser,
   getUserById,
   userSignIn,
+  userToken
 };

@@ -31,10 +31,18 @@ const gettoken = (req) => {
 };
 
 const token = (req, res, next) => {
+  const token = req.params.id;
   var jwt = require("jsonwebtoken");
-  var token = jwt.sign({ foo: req.body.email }, "abcdf");
-  req.token = token;
-  next();
+  var decoded = jwt.verify(token, "abcdf");
+  Users.findOne({ email: decoded.foo }, (err, data) => {
+    if (err) return res.status(302).send(err);
+    if (!data) return res.status(444).send("You are not Valid User");
+    req.user = data;
+    next();
+  });
+  // var token = jwt.sign({ foo: req.body.email }, "abcdf");
+  // req.token = token;
+  // next();
 };
 
 const isAdmin = (req, res, next) => {
