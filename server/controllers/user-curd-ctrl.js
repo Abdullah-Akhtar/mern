@@ -135,7 +135,7 @@ userSignIn = async (req, res) => {
   return res.status(200).json({ success: true, data: req.token });
 };
 userToken = async (req, res) => {
-
+  return res.status(200).json({ success: true, data: true });
 }
 module.exports = {
   createUser,

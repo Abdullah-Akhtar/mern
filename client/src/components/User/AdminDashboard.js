@@ -11,11 +11,27 @@ function BooksManagement() {
 
   const navigate = useNavigate();
 
-  async function isUser(){
-    const id = localStorage.getItem("my-key");
-    console.log(id)
-    await api.userToken(id).then().catch()
-
+  async function isUser() {
+    if (localStorage.getItem("my-key")) {
+      const id = localStorage.getItem("my-key");
+      await api
+        .userToken(id)
+        .then((result) => {
+          if (result.data.data === true) {
+            setauthenticated(true);
+            setBtnShow(true);
+            findBook();
+          } else {
+            navigate("/SignIn");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          navigate("/SignIn");
+        });
+    } else {
+      navigate("/SignIn");
+    }
   }
   function SignInHandleChange(evt) {
     const value = evt.target.value;
@@ -65,18 +81,11 @@ function BooksManagement() {
     window.location.reload();
   }
   useEffect(() => {
-    if (localStorage.getItem("my-key")) {
-      setBtnShow(true);
-
-      findBook();
-    } else {
-      navigate("/SignIn");
-    }
+    isUser();
   }, []);
   return (
     <>
       <div className="container mt-5">
-        <button className="btn" onClick={isUser}>temp</button>
         <div>
           {btnShow && (
             <button

@@ -29,20 +29,32 @@ const gettoken = (req) => {
 
   return null;
 };
-
-const token = (req, res, next) => {
-  const token = req.params.id;
+const isToken = (req, res, next) => {
   var jwt = require("jsonwebtoken");
-  var decoded = jwt.verify(token, "abcdf");
-  Users.findOne({ email: decoded.foo }, (err, data) => {
-    if (err) return res.status(302).send(err);
-    if (!data) return res.status(444).send("You are not Valid User");
-    req.user = data;
-    next();
-  });
-  // var token = jwt.sign({ foo: req.body.email }, "abcdf");
-  // req.token = token;
-  // next();
+  var token = jwt.sign({ foo: req.body.email }, "abcdf");
+  req.token = token;
+  next();
+};
+const token = (req, res, next) => {
+  if (
+    req.params.id === "null" ||
+    req.params.id === undefined ||
+    !req.params.id
+  ) {
+    return res.status(404).json({
+      message: "User not updated!",
+    });
+  } else {
+    const token = req.params.id;
+    var jwt = require("jsonwebtoken");
+    var decoded = jwt.verify(token, "abcdf");
+    Users.findOne({ email: decoded.foo }, (err, data) => {
+      if (err) return res.status(302).send(err);
+      if (!data) return res.status(444).send("You are not Valid User");
+      req.user = data;
+      next();
+    });
+  }
 };
 
 const isAdmin = (req, res, next) => {
@@ -67,4 +79,4 @@ const isLogin = (req, res, next) => {
   });
 };
 
-module.exports = { isEmail, token, isAdmin, isLogin };
+module.exports = { isEmail, isToken, token, isAdmin, isLogin };

@@ -13,7 +13,7 @@ router.put("/user/:id", UserCtrl.updateUser);
 router.delete("/user/:id", UserCtrl.deleteUser);
 router.get("/user/:id", UserCtrl.getUserById);
 router.post("/users/:id", UserCtrl.getUser);
-router.post("/userSignIn", auth.isEmail, auth.token, UserCtrl.userSignIn);
+router.post("/userSignIn", auth.isEmail, auth.isToken, UserCtrl.userSignIn);
 router.post("/book", auth.isAdmin, BookCtrl.addBook);
 router.post("/book/:search", auth.isAdmin, BookCtrl.updatebook);
 router.delete("/book", auth.isAdmin, BookCtrl.remBook);

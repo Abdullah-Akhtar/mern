@@ -30,7 +30,7 @@ function SignIn() {
         password: "",
       });
       // window.location.reload();
-      navigate("/FindUser");
+      navigate("/admin");
     });
   }
   return (
