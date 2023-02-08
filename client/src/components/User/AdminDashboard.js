@@ -90,8 +90,10 @@ function BooksManagement() {
   ///////////////////////////////////////////
   async function removeUser(evt) {
     console.log(evt);
-    await api.remBook();
-    window.location.reload();
+    await api.remBook(evt, token).then((result) => {
+      window.alert(result.data.message);
+      window.location.reload();
+    });
   }
 
   /////////////////////////////////////////////

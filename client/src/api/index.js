@@ -15,7 +15,7 @@ export const search = (payload) => api.get(`/book`, payload);
 export const searchAll = (payload) => api.get(`/bookSearch`, payload);
 export const addBook = (payload) => api.post(`/book`, payload);
 export const updatebook = (payload) => api.post(`/book/${search}`, payload);
-export const remBook = (payload) => api.delete(`/book`, payload);
+export const remBook = (id,token,payload) => api.delete(`/book/${id}/${token}`,payload);
 
 const apis = {
   insertUser,

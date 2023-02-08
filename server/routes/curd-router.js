@@ -16,7 +16,7 @@ router.post("/users/:id", UserCtrl.getUser);
 router.post("/userSignIn", auth.isEmail, auth.isToken, UserCtrl.userSignIn);
 router.post("/book", auth.isAdmin, BookCtrl.addBook);
 router.post("/book/:search", auth.isAdmin, BookCtrl.updatebook);
-router.delete("/book", auth.isAdminRe, BookCtrl.remBook);
+router.delete("/book/:id/:token", auth.isAdminRe, BookCtrl.remBook);
 router.get("/book", BookCtrl.search);
 router.get("/bookSearch", BookCtrl.searchAll);
 

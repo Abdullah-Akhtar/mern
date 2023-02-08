@@ -70,11 +70,7 @@ const isAdmin = (req, res, next) => {
 
 //Checking admin for removing book
 const isAdminRe = (req, res, next) => {
-  console.log(req.body);
-  console.log("Token" + req.body.token);
-  console.log("evt" + req.body.evt);
-  var jwt = require("jsonwebtoken");
-  let token = req.body.id;
+  let token = req.params.token;
   var decoded = jwt.verify(token, "abcdf");
   Users.findOne({ email: decoded.foo }, (err, data) => {
     if (err) return res.status(302).send(err);

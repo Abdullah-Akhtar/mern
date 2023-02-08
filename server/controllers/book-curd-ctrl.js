@@ -66,16 +66,22 @@ updatebook = (req, res) => {
 ////////////Delete book////////////////
 //////////////////////////////////////
 remBook = (req, res) => {
-  console.log("Token" + token)
-  console.log("evt" + evt)
-  // Books.deleteOne({ title: req.body.title }, (err, data) => {
-  //   if (!err && data) {
-  //     res.send("Book Deleted Successfully");
-  //   }
-  //   if (!data) {
-  //     res.send("Title not found");
-  //   }
-  // });
+  console.log(req.params.id)
+  Books.deleteOne({ title: req.params.id }, (err, data) => {
+    if (!err && data) {
+      console.log(data)
+      return res.status(201).json({
+        success: true,
+        message: "Book Delete Successfully",
+      });
+    }
+    if (!data) {
+      return res.status(400).json({
+        error,
+        message: "Book not Found!",
+      });
+    }
+  });
 };
 
 ////////////////////////////////////////
