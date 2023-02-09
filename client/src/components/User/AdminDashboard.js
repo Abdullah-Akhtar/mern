@@ -10,6 +10,9 @@ function BooksManagement() {
   const [BookList, setBookList] = useState([]);
   const [btnShow, setBtnShow] = useState(false);
   const [user, setUser] = useState();
+  const [find, setFind] = useState({
+    search: "",
+  });
 
   const navigate = useNavigate();
 
@@ -102,6 +105,14 @@ function BooksManagement() {
     localStorage.removeItem("my-key");
     window.location.reload();
   }
+  async function search(evt) {
+    const value = evt.target.value;
+    console.log(value);
+    setFind({
+      ...find,
+      [evt.target.name]: value,
+    });
+  }
 
   /////////////////////////////////////////////
   /////////Startup Function///////////////////
@@ -181,7 +192,19 @@ function BooksManagement() {
               )}
             </div>
           )}
-
+          {/* Search Bar */}
+          <div>
+            <input
+              className="form-control"
+              name="search"
+              placeholder="Search"
+              value={find.search}
+              onChange={(e) => {
+                
+                search(e);
+              }}
+            />
+          </div>
           {/* Display All books in Table */}
           <div className="col-12">
             <table className="table">

@@ -87,20 +87,21 @@ remBook = (req, res) => {
 ////////////Searching books////////////
 ////////////////////////////////////////
 search = (req, res) => {
-  Books.find(
-    {
-      $or: [
-        { auther: { $regex: req.body.search, $options: "i" } },
-        { title: { $regex: req.body.search, $options: "i" } },
-      ],
-    },
-    function (err, names) {
-      if (err || !names.length) {
-        return res.status(400).send("Nothing Found.");
-      }
-      return res.send(names);
-    }
-  );
+  console.log(req.body)
+  // Books.find(
+  //   {
+  //     $or: [
+  //       { auther: { $regex: req.body.search, $options: "i" } },
+  //       { title: { $regex: req.body.search, $options: "i" } },
+  //     ],
+  //   },
+  //   function (err, names) {
+  //     if (err || !names.length) {
+  //       return res.status(400).send("Nothing Found.");
+  //     }
+  //     return res.send(names);
+  //   }
+  // );
 };
 
 ////////////////////////////////////////
