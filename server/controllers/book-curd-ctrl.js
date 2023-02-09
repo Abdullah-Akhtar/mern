@@ -87,7 +87,6 @@ remBook = (req, res) => {
 ////////////Searching books////////////
 ////////////////////////////////////////
 search = (req, res) => {
-  console.log(req.params)
   Books.find(
     {
       $or: [
