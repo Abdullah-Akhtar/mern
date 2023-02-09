@@ -66,7 +66,6 @@ updatebook = (req, res) => {
 ////////////Delete book////////////////
 //////////////////////////////////////
 remBook = (req, res) => {
-  console.log(req.params.id)
   Books.deleteOne({ _id: req.params.id }, (err, data) => {
     if (!err && data) {
       console.log(data)

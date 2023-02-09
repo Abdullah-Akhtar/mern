@@ -89,7 +89,6 @@ function BooksManagement() {
   /////////Remove one Book////////////////////
   ///////////////////////////////////////////
   async function removeUser(evt) {
-    console.log(evt);
     await api.remBook(evt, token).then((result) => {
       window.alert(result.data.message);
       window.location.reload();
