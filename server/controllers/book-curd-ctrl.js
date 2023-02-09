@@ -87,6 +87,7 @@ remBook = (req, res) => {
 ////////////Searching books////////////
 ////////////////////////////////////////
 search = (req, res) => {
+  console.log(req.params)
   Books.find(
     {
       $or: [
@@ -95,14 +96,13 @@ search = (req, res) => {
       ],
     },
     function (err, names) {
-    console.log(names)
       if (err || !names.length) {
         return res.status(400).send("Nothing Found.");
       }
       return res.status(201).json({
         success: true,
         data:names,
-        message: "Book Delete Successfully",
+        message: "Found",
       });
     }
   );

@@ -8,8 +8,10 @@ function BooksManagement() {
   const [isAdmin, setisAdmin] = useState(false);
   const [token, setToken] = useState();
   const [BookList, setBookList] = useState([]);
+  const [tempBookList, setTempBookList] = useState([]);
   const [btnShow, setBtnShow] = useState(false);
   const [user, setUser] = useState();
+  const [searchStatus, setSearchStatus] = useState(false);
   const [find, setFind] = useState({
     search: "",
   });
@@ -109,10 +111,16 @@ function BooksManagement() {
     const value = evt.target.value;
     console.log(value);
     if (value) {
+      setSearchStatus(true);
       await api
         .search(value)
         .then((result) => {
-          console.log(result.data.data);
+          if(result){
+            console.log(result)
+            setTempBookList(result.data.data)
+          }else{
+            setTempBookList("");
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -121,6 +129,8 @@ function BooksManagement() {
         ...find,
         [evt.target.name]: value,
       });
+    }else{
+      setSearchStatus(false)
     }
     // searchfind(value)
   }
@@ -215,58 +225,107 @@ function BooksManagement() {
               className="form-control"
               name="search"
               placeholder="Search"
-              value={find.search}
+              // value={find.search}
               onChange={(e) => {
                 search(e);
               }}
             />
           </div>
           {/* Display All books in Table */}
-          <div className="col-12">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th className="col">Title</th>
-                  <th className="col">Aurther</th>
-                  <th className="col">Price</th>
-                  <th className="col">Quantity</th>
-                  {user && <th className="col">Add to Cart</th>}
-                  {isAdmin && <th className="col">Edit</th>}
-                  {isAdmin && <th className="col">Delete</th>}
-                </tr>
-              </thead>
-              <tbody>
-                {BookList.map((books) => (
-                  <tr key={books._id}>
-                    <td className="col">{books.title}</td>
-                    <td className="col">{books.auther}</td>
-                    <td className="col">{books.price}</td>
-                    <td className="col">{books.quantity}</td>
-                    {isAdmin && (
-                      <td className="col">
-                        <button className="btn btn-primary">+</button>
-                      </td>
-                    )}
-                    {isAdmin && (
-                      <td className="col">
-                        <button
-                          className="btn btn-danger"
-                          onClick={(e) => removeUser(books._id)}
-                        >
-                          X
-                        </button>
-                      </td>
-                    )}
-                    {user && (
-                      <td className="col">
-                        <button className="btn btn-primary">+</button>
-                      </td>
-                    )}
+          {!searchStatus && (
+            <div className="col-12">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th className="col">Title</th>
+                    <th className="col">Aurther</th>
+                    <th className="col">Price</th>
+                    <th className="col">Quantity</th>
+                    {user && <th className="col">Add to Cart</th>}
+                    {isAdmin && <th className="col">Edit</th>}
+                    {isAdmin && <th className="col">Delete</th>}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {BookList.map((books) => (
+                    <tr key={books._id}>
+                      <td className="col">{books.title}</td>
+                      <td className="col">{books.auther}</td>
+                      <td className="col">{books.price}</td>
+                      <td className="col">{books.quantity}</td>
+                      {isAdmin && (
+                        <td className="col">
+                          <button className="btn btn-primary">+</button>
+                        </td>
+                      )}
+                      {isAdmin && (
+                        <td className="col">
+                          <button
+                            className="btn btn-danger"
+                            onClick={(e) => removeUser(books._id)}
+                          >
+                            X
+                          </button>
+                        </td>
+                      )}
+                      {user && (
+                        <td className="col">
+                          <button className="btn btn-primary">+</button>
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+          {searchStatus && (
+            <div className="col-12">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th className="col">Title</th>
+                    <th className="col">Aurther</th>
+                    <th className="col">Price</th>
+                    <th className="col">Quantity</th>
+                    {user && <th className="col">Add to Cart</th>}
+                    {isAdmin && <th className="col">Edit</th>}
+                    {isAdmin && <th className="col">Delete</th>}
+                  </tr>
+                </thead>
+                <tbody>
+                  {tempBookList.map((books) => (
+                    <tr key={books._id}>
+                      <td className="col">{books.title}</td>
+                      <td className="col">{books.auther}</td>
+                      <td className="col">{books.price}</td>
+                      <td className="col">{books.quantity}</td>
+                      {isAdmin && (
+                        <td className="col">
+                          <button className="btn btn-primary">+</button>
+                        </td>
+                      )}
+                      {isAdmin && (
+                        <td className="col">
+                          <button
+                            className="btn btn-danger"
+                            onClick={(e) => removeUser(books._id)}
+                          >
+                            X
+                          </button>
+                        </td>
+                      )}
+                      {user && (
+                        <td className="col">
+                          <button className="btn btn-primary">+</button>
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </>
