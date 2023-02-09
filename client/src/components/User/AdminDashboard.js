@@ -108,11 +108,28 @@ function BooksManagement() {
   async function search(evt) {
     const value = evt.target.value;
     console.log(value);
-    setFind({
-      ...find,
-      [evt.target.name]: value,
-    });
+    if (value) {
+      await api
+        .search(value)
+        .then((result) => {
+          console.log(result.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      setFind({
+        ...find,
+        [evt.target.name]: value,
+      });
+    }
+    // searchfind(value)
   }
+
+  // async function searchfind(data){
+  //   await.api.search(data){
+
+  //   }
+  // }
 
   /////////////////////////////////////////////
   /////////Startup Function///////////////////
@@ -193,14 +210,13 @@ function BooksManagement() {
             </div>
           )}
           {/* Search Bar */}
-          <div>
+          <div className="col-12 m-2">
             <input
               className="form-control"
               name="search"
               placeholder="Search"
               value={find.search}
               onChange={(e) => {
-                
                 search(e);
               }}
             />

@@ -68,7 +68,7 @@ updatebook = (req, res) => {
 remBook = (req, res) => {
   Books.deleteOne({ _id: req.params.id }, (err, data) => {
     if (!err && data) {
-      console.log(data)
+      console.log(data);
       return res.status(201).json({
         success: true,
         message: "Book Delete Successfully",
@@ -87,21 +87,26 @@ remBook = (req, res) => {
 ////////////Searching books////////////
 ////////////////////////////////////////
 search = (req, res) => {
-  console.log(req.body)
-  // Books.find(
-  //   {
-  //     $or: [
-  //       { auther: { $regex: req.body.search, $options: "i" } },
-  //       { title: { $regex: req.body.search, $options: "i" } },
-  //     ],
-  //   },
-  //   function (err, names) {
-  //     if (err || !names.length) {
-  //       return res.status(400).send("Nothing Found.");
-  //     }
-  //     return res.send(names);
-  //   }
-  // );
+  console.log(req.params)
+  Books.find(
+    {
+      $or: [
+        { auther: { $regex: req.params.find, $options: "i" } },
+        { title: { $regex: req.params.find, $options: "i" } },
+      ],
+    },
+    function (err, names) {
+    console.log(names)
+      if (err || !names.length) {
+        return res.status(400).send("Nothing Found.");
+      }
+      return res.status(201).json({
+        success: true,
+        data:names,
+        message: "Book Delete Successfully",
+      });
+    }
+  );
 };
 
 ////////////////////////////////////////
